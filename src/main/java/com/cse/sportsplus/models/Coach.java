@@ -1,19 +1,9 @@
 package com.cse.sportsplus.models;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.SecondaryTable;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 
 @Entity
 @Table(name="tbl_coach")
@@ -30,6 +20,9 @@ public class Coach implements Serializable {
 	@Column(name="coach_id")
 	private Long coach_id;
 	
+	@ManyToMany
+	@JoinColumn(name = "groupID")
+	private List<Group> groups;
 	
 	@Column(name="name")
 	private String name;
@@ -52,14 +45,13 @@ public class Coach implements Serializable {
 		this.coach_id = coach_id;
 	}
 
-	
 
-	public Long getGroup_id() {
-		return group_id;
+	public List<Group> getGroups() {
+		return groups;
 	}
 
-	public void setGroup_id(Long group_id) {
-		this.group_id = group_id;
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
 	}
 
 	public String getName() {
