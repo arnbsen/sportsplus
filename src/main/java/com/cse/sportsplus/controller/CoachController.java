@@ -30,7 +30,6 @@ public class CoachController {
 	@PostMapping("/create")
 	public Coach coachCreate(@RequestBody Coach coach) {
 		Coach coh = coachRepository.save(coach);
-		groupRepository.addGroupAndCoach(BigInteger.valueOf(coach.getGroup_id()), BigInteger.valueOf(coach.getCoach_id()));
 		return coh;
 	}
 	
