@@ -239,13 +239,14 @@ app.controller("groupCtrl", function($scope, $http) {
 	};
 	
 	// deleteGroup -> deleteGroup
-	$scope.deleteGroup = function() {
+	$scope.deleteGroup = function(grp) {
 		$http({
 			method : 'POST',
 			url : 'http://localhost:8080/group/deleteGroup',
-			data : $scope.group
+			data : grp
 		}).success(function(data, status) {
 			alert("Group deleted");
+			$scope.getAllGroups();
 		}).error(function(data, status) {
 			$scope.status = status;
 		});
@@ -256,7 +257,7 @@ app.controller("groupCtrl", function($scope, $http) {
 		$http({
 			method : 'POST',
 			url : 'http://localhost:8080/group/getAGroup',
-			data : $scope.group1
+			data : $scope.groupData
 		}).success(function(data, status) {
 			$scope.groupData = data;
 		}).error(function(data, status) {
@@ -265,11 +266,11 @@ app.controller("groupCtrl", function($scope, $http) {
 	};
 	
 	// updateGroup -> updateGroup
-	$scope.updateGroup = function() {
+	$scope.updateGroup = function(grp) {
 		$http({
 			method : 'POST',
 			url : 'http://localhost:8080/group/updateGroup',
-			data : $scope.group1
+			data : grp
 		}).success(function(data, status) {
 			alert("updated");
 		}).error(function(data, status) {
@@ -345,7 +346,7 @@ app.controller("groupCtrl", function($scope, $http) {
 //Coach Controller
 app.controller("coachCtrl", function($scope, $http){
 	$scope.addCoach = function(ch){
-		if(Object.keys(ch).length < 3){
+		if(ch == null || Object.keys(ch).length < 3){
 			alert("Fields cannot be left blank");
 			return;
 		};

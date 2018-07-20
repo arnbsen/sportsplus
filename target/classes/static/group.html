@@ -1,6 +1,9 @@
-<div class="container" ng-init="enableGroup=true">
-	<h3>Group Controls</h3>
-<div class="container well">
+<div class="container" ng-init="enableGroup=true" style="margin-top: 50px;"ng-init="showTable=false;">
+		<div class="row">
+				<div class="col-md-1"><img src="grp.png" width="100px" height="100px"></div>
+				<div class="col-md-11"><h1>&nbsp Group Controls</h1></div>
+				</div>
+<div class="container well" style="margin-top: 20px">
 	<h3>Add Group</h3>
 		<form class="form" style="width: 500px;">
 		Academy ID:<br>
@@ -23,12 +26,13 @@
 			<option ng-repeat="cid in allCoach">{{cid}}</option>
 	  </select>
 	  <br><br>
-	  <button ng-click="addGroup(academy,c)" class="btn btn-success">Add Group</button>
+	  <button ng-click="addGroup(academy,c)" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add Group</button>
 	</form>
-	<div style="width: 500px;">
-	<h3>View, Delete And Update</h3>
-	<div>
-		<h5>Add Coaches:</h5>
+</div>
+<div class="row container">
+<h3>View, Delete And Update</h3>
+	<div class="col-lg-5 well">
+		<h3>Add Coaches:</h3>
 		Academy ID:<br>
 	  	<select class="form-control" ng-init="fetchAid()" ng-model="academy.id" ng-change="fetchGid(academy.id);enableGroup=false">
 			<option ng-repeat="s in aid">{{s}}</option>
@@ -42,59 +46,55 @@
 				<option ng-repeat="cid in allCoach">{{cid}}</option>
 		</select>
 		<p style="height: 20px;"></p>
-		<button class="btn btn-success" ng-click="addCoach(acg, nc)">Add Coach</button>
+		<button class="btn btn-success" ng-click="addCoach(acg, nc)"><span class="glyphicon glyphicon-plus"></span> Add Coach</button>
 	</div>
-	<h4>Delete Group</h4>
-	<form>
-		Group ID:<br>
-		<input type="text" ng-model="group.groupID">
-		<br>
-		<button ng-click="deleteGroup()" class="btn btn-danger">Delete</button>
-	</form> 
-	
-	
-	<h4>Update Group</h4>
-	<form>
-		Group ID: <br>
-		<div class="form-inline">
-		<input type="text" ng-model="group1.groupID" class="form-control">
-		<button ng-click="fetchGroup()" class="btn btn-primary">Fetch</button>
-		</div>
-		<br>
-
-		Group Name: {{groupData.groupName}}
-		
-		<br>
-		<input type="text" ng-model="group1.groupName" class="form-control">
-		<br>
-		Group Description: {{groupData.groupDescription}}
-		
-		<br>
-		<input type="text"  ng-model="group1.groupDescription" class="form-control">
-		<br>
-		Group Status: {{groupData.groupStatus}}
-		<br>
-		<input type="text" ng-model="group1.groupStatus" class="form-control">
-		<br>
-		<button ng-click="updateGroup()" class="btn btn-success">Update</button>
-	</form>
-	
+	<div class="col-lg-1"></div>
+	<div class="col-lg-6 well">
+			<h4>Update Group</h4>
+			<form>
+				Group ID: <br>
+				<div class="form-inline">
+				<input type="text" ng-model="groupData.groupID" class="form-control" ng-disabled="idDisable">
+				<button ng-click="fetchGroup();idDisable=true" class="btn btn-primary"><span class="glyphicon glyphicon-menu-right"></span> Fetch</button>
+				</div>
+				<br>
+				Group Name:
+				<br>
+				<input type="text" ng-model="groupData.groupName" class="form-control">
+				<br>
+				Group Description:
+				<br>
+				<textarea rows="3" type="text"  ng-model="groupData.groupDescription" class="form-control"></textarea>
+				<br>
+				Group Status:
+				<br>
+				<select ng-model="groupData.groupStatus" class="form-control">
+						<option ng-repeat="s in ['Training (Pre-Season)', 'Training (Season)', 'Competition', 'Post-Competition', 'Injured', 'Rehabilitation']">{{s}}</option>
+				</select>
+				<br>
+				<button ng-click="updateGroup(groupData);idDisable=false" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span> Update</button>
+			</form>
+	</div>
+</div>
+</div>	
+<div class="row well">
 	<h4>All Groups</h4>
-	<button ng-click="getAllGroups()" class="btn btn-primary">Get Details</button>
-	<table>
+	<button ng-click="getAllGroups(); showTable=!showTable" class="btn btn-primary"><span class="glyphicon glyphicon-list"></span> Get Details</button>
+	<table class="table" ng-show="showTable">
 		<tr>
 			<th>Group Id</th>
 			<th>Group Name</th>
 			<th>Group Description</th>
 			<th>Group Status</th>
+			<th>Delete</th>
 		</tr>
-		<tr ng-repeat="group in groups">
-			<td>{{group.groupID}}</td>
-			<td>{{group.groupName}}</td>
-			<td>{{group.groupDescription}}</td>
-			<td>{{group.groupStatus}}</td>
+		<tr ng-repeat="grp in groups">
+			<td>{{grp.groupID}}</td>
+			<td>{{grp.groupName}}</td>
+			<td>{{grp.groupDescription}}</td>
+			<td>{{grp.groupStatus}}</td>
+			<td><button  class="btn btn-danger" ng-click="deleteGroup(grp)"><span class="glyphicon glyphicon-remove"></span> Delete</button></td>
 		</tr>
 	</table>
-</div>
 </div>
 </div>
